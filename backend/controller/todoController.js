@@ -24,10 +24,18 @@ const deleteTodo = async (req, res) =>{
 }
 
 const updateTodo = async (req, res) =>{
-    const id = req.params._id
+    const id = req.params.id
     const body = req.body;
     const result = await Todo.findByIdAndUpdate(id, body)
     res.send(result)
 }
 
-module.exports = {createTodo, getTodo, getTodos, deleteTodo, updateTodo}
+const completedTodo = async (req, res) =>{
+    const id = req.params.id
+    const result = await Todo.findById({_id:id})
+    result.isDone = !result.isDone
+    await result.save()
+    res.send(result)
+}
+
+module.exports = {createTodo, getTodo, getTodos, deleteTodo, updateTodo, completedTodo}

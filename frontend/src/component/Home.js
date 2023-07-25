@@ -1,13 +1,19 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
-import { RiCheckboxCircleFill } from "react-icons/ri";
-import { RiCheckboxBlankCircleLine } from "react-icons/ri";
+import {
+  RiCheckboxCircleFill,
+  RiCheckboxBlankCircleLine,
+} from "react-icons/ri";
+import { FaSmileWink, FaSmileBeam } from "react-icons/fa";
+import { RxCross2 } from "react-icons/rx";
 
 export const Home = () => {
   const [value, setValue] = useState("");
-  const [list, setList] = useState([{ _id: "anyid" }]);
+  const [list, setList] = useState([]);
   const [id, setId] = useState([]);
+  const [show, setShow] = useState(true);
+  const [isUpdating, setIsUpdating] = useState("")
 
   const addTodo = () => {
     if (!value) return;
@@ -39,12 +45,38 @@ export const Home = () => {
       });
   };
 
-  const Update = (_id) => {};
+  const Update = (_id) => {
+    console.log(_id);
+    axios
+    .patch("http://localhost:5000/update/" + _id)
+    .then((res) =>{
+      console.log("updated", res.data);
+      axios
+      .get("http://localhost:5000/lists").then((data) =>{
+        setList(data.data)
+      })
+    })
+    .catch((err) =>{
+      console.log(err)
+    })
+  };
 
   const handleCheck = (index) => {
     const tasksClone = [...list];
     tasksClone[index].isCompleted = !tasksClone[index].isCompleted;
     setList(tasksClone);
+  };
+
+  const Task = () => {
+    if (1 < 2) {
+      setShow(true);
+    }
+  };
+
+  const Completed = () => {
+    if (1 < 2) {
+      setShow(false);
+    }
   };
 
   useEffect(() => {
@@ -62,65 +94,108 @@ export const Home = () => {
         <div className={styles.block}>
           <div className={styles.add_section}>
             <h1 className={styles.big_title}>Todo-List</h1>
-            <input
-              placeholder="What do you have planned ?"
-              className={styles.add_npt}
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-            ></input>
-            <button className={styles.add_btn} onClick={addTodo}>
-              add task
-            </button>
+            <div className={styles.flex_crs}>
+              <div className={styles.npt_cross}>
+                <input
+                  placeholder="What do you have planned ?"
+                  className={styles.add_npt}
+                  value={value}
+                  onChange={(e) => setValue(e.target.value)}
+                  
+                ></input>
+                <div className={styles.cross} onClick={() => setValue("")}>
+                  <RxCross2 />
+                </div>
+              </div>
+              <button className={styles.add_btn} onClick={addTodo}>
+                Add task
+              </button>
+            </div>
           </div>
           <main>
-            <h3 className={styles.mid_title}>Tasks / {count}</h3>
+            <div className={styles.title}>
+              <u className={styles.mid_title} onClick={Task}>
+                Tasks / {count}
+              </u>
+              <u className={styles.mid_title} onClick={Completed}>
+                Completed / ?
+              </u>
+            </div>
             <div>
-              {list.map((har, index) => {
-                return (
-                  <div className={styles.task_block}>
-                    <div
-                      className={styles.done_section}
-                      onClick={() => handleCheck(index)}
-                    >
-                      {har.isCompleted ? (
-                        <RiCheckboxCircleFill className={styles.done} />
-                      ) : (
-                        <RiCheckboxBlankCircleLine className={styles.done} />
-                      )}
-                      <div>
-                        <input
-                          value={har.todo}
-                          className={styles.input_value}
-                          style={{
-                            textDecorationLine: har.isCompleted
-                              ? "line-through"
-                              : undefined,
-                          }}
-                          onClick={() => handleCheck(index)}
-                        ></input>
+              {show && (
+                <>
+                  {list &&
+                    list.map((har, index) => {
+                      return (
+                        <div className={styles.task_block}>
+                          <div
+                            className={styles.done_section}
+                            onClick={() => handleCheck(index)}
+                          >
+                            {har.isCompleted ? (
+                              <RiCheckboxCircleFill className={styles.done} />
+                            ) : (
+                              <RiCheckboxBlankCircleLine
+                                className={styles.done}
+                              />
+                            )}
+                           <div className={styles.ner1}>
+                           <div className={styles.text_npt}>
+                              <p
+                                className={styles.input_value}
+                                style={{
+                                  textDecorationLine: har.isCompleted
+                                    ? "line-through"
+                                    : undefined,
+                                }}
+                                onClick={() => handleCheck(index)}
+                              >
+                                {har.todo}
+                              </p>
+                            </div>
+                           </div>
+                          </div>
+                          <div className={styles.btns}>
+                            <button
+                              className={styles.edit}
+                              onClick={() => {
+                                Update(har._id, har);
+                              }}
+                            >
+                              edit
+                            </button>
+                            <button
+                              className={styles.delete}
+                              onClick={() => {
+                                Delete(har._id);
+                              }}
+                            >
+                              delete
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  {list && list.length == 0 && (
+                    <div className={styles.none_flex}>
+                      <div className={styles.none_card}>
+                        Have no task to do{" "}
+                        <FaSmileBeam className={styles.smile} />
                       </div>
                     </div>
-                    <div className={styles.btns}>
-                      <button
-                        className={styles.edit}
-                        onClick={() => {
-                          Update(har._id);
-                        }}
-                      >
-                        edit
-                      </button>
-                      <button
-                        className={styles.delete}
-                        onClick={() => {
-                          Delete(har._id);
-                        }}
-                      >
-                        delete
-                      </button>
+                  )}
+                </>
+              )}
+              {!show && (
+                <>
+                  <div className={styles.none_flex}>
+                    <div className={styles.none_card}>
+                      completed tasks{" "}
+                      <FaSmileWink className={styles.smile} />
                     </div>
                   </div>
-                );
-              })}
+                </>
+              )}
             </div>
           </main>
         </div>

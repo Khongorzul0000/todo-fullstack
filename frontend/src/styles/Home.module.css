@@ -41,8 +41,7 @@ input, button{
     background-color: #1f2937;
     color: #EEE;
     padding: 1rem;
-    margin-right: 1rem;
-    border-radius: 1rem;
+    border-radius: 1rem 0 0 1rem ;
     width: 87%;
     font-size: 1rem;
 }
@@ -66,12 +65,17 @@ input, button{
     color: #6B7280;
     font-weight: 300;
     margin-top: 2rem;
+    cursor: pointer;
 }
 .task_block{
     display: flex;
     justify-content: space-between;
     background-color: #111827;
-    padding: 1rem;
+    max-width: 100%;
+    min-width: 100%;
+    height: 56px;
+    max-height: fit-content;
+    align-items: center;
     border-radius: 1rem;
     margin-top: 1rem;
 }
@@ -80,7 +84,6 @@ input, button{
     font-size: 1.125rem;
     transition: 0.4s;
     font-weight: bold;
-    width: 350%;
     padding-left: 20px;
 }
 .btns button{
@@ -109,4 +112,55 @@ input, button{
 .done{
     width: 20px;
     height: 20px;
+    padding-left: 1rem;
+}
+.none_flex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+}
+.none_card{
+    padding: 1rem ;
+    background-color: #111827;
+    padding: 1rem;
+    border-radius: 1rem;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+.smile{
+    position: relative;
+    top: 3px;
+}
+.cross{
+    padding: 1rem;
+    background-color: #1f2937;
+    width: max-content;
+    border-radius: 0 1rem 1rem 0;
+}
+.npt_cross{
+    display: flex;
+    width: 92%;
+}
+.flex_crs{
+    display: flex;
+}
+.title{
+    display: flex;
+    justify-content: space-between;
+}
+.cross:hover{
+    opacity: 0.9;
+}
+.cross:active{
+    opacity: 0.8;
+}
+.btns{
+    width: 15%;
+}
+.text_npt{
+    color: red;
+}
+.ner1{
+    color: red;
 }
