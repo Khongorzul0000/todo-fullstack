@@ -38,4 +38,15 @@ const completedTodo = async (req, res) =>{
     res.send(result)
 }
 
-module.exports = {createTodo, getTodo, getTodos, deleteTodo, updateTodo, completedTodo}
+const getCompleted = async (req, res) =>{
+    const id = req.params.id
+    const result = await Todo.findById({_id:id})
+    if(result.isDone ===false){
+        res.send(result)
+    }else{
+        res.send("else")
+    }
+
+}
+
+module.exports = {createTodo, getTodo, getTodos, deleteTodo, updateTodo, completedTodo, getCompleted}

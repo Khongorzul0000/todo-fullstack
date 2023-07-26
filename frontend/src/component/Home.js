@@ -13,7 +13,7 @@ export const Home = () => {
   const [list, setList] = useState([]);
   const [id, setId] = useState([]);
   const [show, setShow] = useState(true);
-  const [isUpdating, setIsUpdating] = useState("")
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const addTodo = () => {
     if (!value) return;
@@ -45,20 +45,28 @@ export const Home = () => {
       });
   };
 
-  const Update = (_id) => {
-    console.log(_id);
+  const Update = () => {
+    console.log(id);
     axios
-    .patch("http://localhost:5000/update/" + _id)
-    .then((res) =>{
-      console.log("updated", res.data);
-      axios
-      .get("http://localhost:5000/lists").then((data) =>{
-        setList(data.data)
+      .patch("http://localhost:5000/update/" + id, {
+        todo: value,
       })
-    })
-    .catch((err) =>{
-      console.log(err)
-    })
+      .then((res) => {
+        console.log("updated", res.data);
+        setIsUpdating(false);
+        axios.get("http://localhost:5000/lists").then((data) => {
+          setList(data.data);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const UpdateMood = (_id, value) => {
+    setIsUpdating(true);
+    setValue(value);
+    setId(_id);
   };
 
   const handleCheck = (index) => {
@@ -101,14 +109,16 @@ export const Home = () => {
                   className={styles.add_npt}
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
-                  
                 ></input>
                 <div className={styles.cross} onClick={() => setValue("")}>
                   <RxCross2 />
                 </div>
               </div>
-              <button className={styles.add_btn} onClick={addTodo}>
-                Add task
+              <button
+                className={styles.add_btn}
+                onClick={isUpdating ? Update : addTodo}
+              >
+                {isUpdating ? "Update task" : "Add task"}
               </button>
             </div>
           </div>
@@ -125,49 +135,50 @@ export const Home = () => {
               {show && (
                 <>
                   {list &&
-                    list.map((har, index) => {
+                    list.map((text, index) => {
                       return (
                         <div className={styles.task_block}>
                           <div
                             className={styles.done_section}
                             onClick={() => handleCheck(index)}
                           >
-                            {har.isCompleted ? (
+                            {text.isCompleted ? (
                               <RiCheckboxCircleFill className={styles.done} />
                             ) : (
                               <RiCheckboxBlankCircleLine
                                 className={styles.done}
                               />
                             )}
-                           <div className={styles.ner1}>
-                           <div className={styles.text_npt}>
-                              <p
-                                className={styles.input_value}
-                                style={{
-                                  textDecorationLine: har.isCompleted
-                                    ? "line-through"
-                                    : undefined,
-                                }}
-                                onClick={() => handleCheck(index)}
-                              >
-                                {har.todo}
-                              </p>
+                            <div className={styles.ner1}>
+                              <div className={styles.text_npt}>
+                                <input
+                                  className={styles.input_value}
+                                  value={text.todo}
+                                  style={{
+                                    textDecorationLine: text.isCompleted
+                                      ? "line-through"
+                                      : undefined,
+                                  }}
+                                  onClick={() => handleCheck(index)}
+                                >
+                                  
+                                </input>
+                              </div>
                             </div>
-                           </div>
                           </div>
                           <div className={styles.btns}>
                             <button
                               className={styles.edit}
                               onClick={() => {
-                                Update(har._id, har);
+                                UpdateMood(text._id, text.todo);
                               }}
                             >
-                              edit
+                             edit
                             </button>
                             <button
                               className={styles.delete}
                               onClick={() => {
-                                Delete(har._id);
+                                Delete(text._id);
                               }}
                             >
                               delete
@@ -176,7 +187,7 @@ export const Home = () => {
                         </div>
                       );
                     })}
-                  {list && list.length == 0 && (
+                  {list && list.length === 0 && (
                     <div className={styles.none_flex}>
                       <div className={styles.none_card}>
                         Have no task to do{" "}
@@ -190,8 +201,7 @@ export const Home = () => {
                 <>
                   <div className={styles.none_flex}>
                     <div className={styles.none_card}>
-                      completed tasks{" "}
-                      <FaSmileWink className={styles.smile} />
+                      Have no completed tasks <FaSmileWink className={styles.smile} />
                     </div>
                   </div>
                 </>

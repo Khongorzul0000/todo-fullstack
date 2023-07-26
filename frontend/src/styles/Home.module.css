@@ -42,7 +42,7 @@ input, button{
     color: #EEE;
     padding: 1rem;
     border-radius: 1rem 0 0 1rem ;
-    width: 87%;
+    width: 90%;
     font-size: 1rem;
 }
 .add_npt::placeholder{
@@ -85,6 +85,7 @@ input, button{
     transition: 0.4s;
     font-weight: bold;
     padding-left: 20px;
+    width: 350%;
 }
 .btns button{
     cursor: pointer;
@@ -163,4 +164,7 @@ input, button{
 }
 .ner1{
     color: red;
+}
+.mid_title:hover{
+    font-weight: bold;
 }

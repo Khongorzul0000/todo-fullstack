@@ -1,5 +1,5 @@
 const express = require("express");
-const { createTodo, getTodo, getTodos, deleteTodo, updateTodo, completedTodo} = require("../controller/todoController")
+const { createTodo, getTodo, getTodos, deleteTodo, updateTodo, completedTodo, getCompleted} = require("../controller/todoController")
 
 const router    = express.Router()
 
@@ -10,5 +10,6 @@ router
 .delete("/delete/:id", deleteTodo)
 .patch("/update/:id", updateTodo)
 .patch("/checked/:id", completedTodo)
+.get("/com", getCompleted)
 
 module.exports = router
