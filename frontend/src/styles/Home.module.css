@@ -84,7 +84,7 @@ input, button{
     font-size: 1.125rem;
     transition: 0.4s;
     font-weight: bold;
-    padding-left: 20px;
+    padding-left: 17px;
     width: 350%;
 }
 .btns button{
@@ -109,6 +109,7 @@ input, button{
 }
 .done_section{
     display: flex;
+    padding-left: 1.5rem;
 }
 .done{
     width: 20px;
@@ -167,4 +168,13 @@ input, button{
 }
 .mid_title:hover{
     font-weight: bold;
+}
+
+
+
+
+
+.wait{
+    border: 1px solid white;
+    width: 20px;
 }

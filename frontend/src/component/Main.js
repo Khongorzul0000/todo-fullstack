@@ -129,3 +129,10 @@ export const Main = () => {
     </div>
   );
 };
+{/* {text.isCompleted ? (
+                              <RiCheckboxCircleFill className={styles.done}  />
+                            ) : (
+                              <RiCheckboxBlankCircleLine
+                                className={styles.done}
+                              />
+                            )} */}

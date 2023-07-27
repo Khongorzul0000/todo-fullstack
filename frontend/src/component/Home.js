@@ -11,6 +11,8 @@ import { RxCross2 } from "react-icons/rx";
 export const Home = () => {
   const [value, setValue] = useState("");
   const [list, setList] = useState([]);
+  const [done, setDone] = useState([]);
+  const [undone, setUndone] = useState([]);
   const [id, setId] = useState([]);
   const [show, setShow] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -38,6 +40,7 @@ export const Home = () => {
         console.log("deleted", res.data);
         axios.get("http://localhost:5000/lists").then((data) => {
           setList(data.data);
+          setDone(data.data)
         });
       })
       .catch((err) => {
@@ -46,7 +49,7 @@ export const Home = () => {
   };
 
   const Update = () => {
-    console.log(id);
+    if (!value) console.log(id);
     axios
       .patch("http://localhost:5000/update/" + id, {
         todo: value,
@@ -61,6 +64,39 @@ export const Home = () => {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const toggleDone = (_id) => {
+    axios.patch("http://localhost:5000/checked/" + _id).then((res) => {
+      console.log(res.data);
+      axios.get("http://localhost:5000/lists").then((data) =>{
+        setList(data.data)
+      })
+      .catch((err) =>{
+        console.log(err)
+      })
+      axios.get("http://localhost:5000/done").then((data) => {
+        setDone(data.data);
+        console.log(done);
+      });
+    });
+  };
+
+  const unDone = (_id) => {
+    axios.patch("http://localhost:5000/checked/" + _id).then((res) => {
+      console.log(res.data);
+      axios.get("http://localhost:5000/lists").then((data) =>{
+        console.log(data.data)
+        setList(data.data)
+      })
+      .catch((err) =>{
+        console.log(err)
+      })
+      axios.get("http://localhost:5000/undone").then((data) => {
+        setUndone(data.data);
+        console.log(undone);
+      });
+    });
   };
 
   const UpdateMood = (_id, value) => {
@@ -86,15 +122,20 @@ export const Home = () => {
       setShow(false);
     }
   };
-
+  
   useEffect(() => {
     axios.get("http://localhost:5000/lists").then((data) => {
       console.log(data);
       setList(data.data);
+      setDone(data.data)
+      setUndone(data.data)
+      console.log(done)
+      console.log(undone)
     });
   }, []);
 
   const count = list.length;
+  const count1 = done.length;
 
   return (
     <div className={styles.flex}>
@@ -128,7 +169,7 @@ export const Home = () => {
                 Tasks / {count}
               </u>
               <u className={styles.mid_title} onClick={Completed}>
-                Completed / ?
+                Completed / {count1}
               </u>
             </div>
             <div>
@@ -142,13 +183,13 @@ export const Home = () => {
                             className={styles.done_section}
                             onClick={() => handleCheck(index)}
                           >
-                            {text.isCompleted ? (
-                              <RiCheckboxCircleFill className={styles.done} />
-                            ) : (
-                              <RiCheckboxBlankCircleLine
-                                className={styles.done}
-                              />
-                            )}
+                            <input
+                            type='checkbox'
+                            className={styles.wait}
+                            defaultChecked={text.isDone}
+                            onClick={() => handleCheck(index)}
+                            onChange={() => toggleDone(text._id, text.isDone)}
+                          />
                             <div className={styles.ner1}>
                               <div className={styles.text_npt}>
                                 <input
@@ -173,7 +214,7 @@ export const Home = () => {
                                 UpdateMood(text._id, text.todo);
                               }}
                             >
-                             edit
+                              edit
                             </button>
                             <button
                               className={styles.delete}
@@ -196,15 +237,98 @@ export const Home = () => {
                     </div>
                   )}
                 </>
+                
               )}
               {!show && (
                 <>
-                  <div className={styles.none_flex}>
-                    <div className={styles.none_card}>
-                      Have no completed tasks <FaSmileWink className={styles.smile} />
+                  {done &&
+                    done.map((text, index) => {
+                      return (
+                        <div className={styles.task_block}>
+                          <div className={styles.done_section}>
+                            <RiCheckboxCircleFill className={styles.done} />
+                            <div className={styles.ner1}>
+                              <div className={styles.text_npt}>
+                                <input
+                                  className={styles.input_value}
+                                  value={text.todo}
+                                  style={{
+                                    textDecorationLine: "line-through",
+                                  }}
+                                ></input>
+                              </div>
+                            </div>
+                          </div>
+                          <div className={styles.btns}>
+                            <button
+                              className={styles.edit}
+                              onClick={() => {
+                                UpdateMood(text._id, text.todo);
+                              }}
+                            >
+                              edit
+                            </button>
+                            <button
+                              className={styles.delete}
+                              onClick={() => {
+                                Delete(text._id);
+                              }}
+                            >
+                              delete
+                            </button>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  {done && done.length === 0 && (
+                    <div className={styles.none_flex}>
+                      <div className={styles.none_card}>
+                        Have no completed tasks{" "}
+                        <FaSmileWink className={styles.smile} />
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </>
+                // <>
+                // {undone && undone.map((text, index) =>{
+                //   return(
+                //     <div className={styles.task_block}>
+                //     <div className={styles.done_section}>
+                //       <RiCheckboxCircleFill className={styles.done} />
+                //       <div className={styles.ner1}>
+                //         <div className={styles.text_npt}>
+                //           <input
+                //             className={styles.input_value}
+                //             value={text.todo}
+                //             style={{
+                //               textDecorationLine: "line-through",
+                //             }}
+                //           ></input>
+                //         </div>
+                //       </div>
+                //     </div>
+                //     <div className={styles.btns}>
+                //       <button
+                //         className={styles.edit}
+                //         onClick={() => {
+                //           UpdateMood(text._id, text.todo);
+                //         }}
+                //       >
+                //         edit
+                //       </button>
+                //       <button
+                //         className={styles.delete}
+                //         onClick={() => {
+                //           Delete(text._id);
+                //         }}
+                //       >
+                //         delete
+                //       </button>
+                //     </div>
+                //   </div>
+                //   )
+                // })}
+                // </>
               )}
             </div>
           </main>

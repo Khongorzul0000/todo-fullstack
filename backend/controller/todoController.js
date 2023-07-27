@@ -17,6 +17,32 @@ const getTodo = async (req, res) =>{
     res.send(result)
 }
 
+const getIsDone = async (req, res) =>{
+   try{
+    const result = await Todo.find({})
+    const done = result.filter((word) => word.isDone == true)
+    console.log(done.length)
+    console.log(done)
+    // res.json({count:done.length})
+    res.send(done)
+   }catch(err) {
+    res.send(err)
+   }
+}
+
+const getUnDone = async (req, res) =>{
+    try{
+        const result = await Todo.find({})
+        const done = result.filter((word) => word.isDone == false)
+        console.log(done.length)
+        console.log(done)
+        // res.json({count:done.length})
+        res.send(done)
+       }catch(err) {
+        res.send(err)
+       }
+}
+
 const deleteTodo = async (req, res) =>{
     const id = req.params.id
     const result = await Todo.findByIdAndDelete({_id:id})
@@ -38,15 +64,4 @@ const completedTodo = async (req, res) =>{
     res.send(result)
 }
 
-const getCompleted = async (req, res) =>{
-    const id = req.params.id
-    const result = await Todo.findById({_id:id})
-    if(result.isDone ===false){
-        res.send(result)
-    }else{
-        res.send("else")
-    }
-
-}
-
-module.exports = {createTodo, getTodo, getTodos, deleteTodo, updateTodo, completedTodo, getCompleted}
+module.exports = {createTodo, getTodo, getTodos, deleteTodo, updateTodo, completedTodo, getIsDone, getUnDone}
