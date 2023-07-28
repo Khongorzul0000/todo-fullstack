@@ -1,10 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
-import {
-  RiCheckboxCircleFill,
-  RiCheckboxBlankCircleLine,
-} from "react-icons/ri";
 import { FaSmileWink, FaSmileBeam } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 
@@ -12,7 +8,6 @@ export const Home = () => {
   const [value, setValue] = useState("");
   const [list, setList] = useState([]);
   const [done, setDone] = useState([]);
-  const [undone, setUndone] = useState([]);
   const [id, setId] = useState([]);
   const [show, setShow] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -25,7 +20,7 @@ export const Home = () => {
       })
       .then((res) => {
         console.log("created", res.data);
-        axios.get("http://localhost:5000/lists").then((data) => {
+        axios.get("http://localhost:5000/undone").then((data) => {
           setList(data.data);
           console.log(res.data._id);
         });
@@ -40,7 +35,7 @@ export const Home = () => {
         console.log("deleted", res.data);
         axios.get("http://localhost:5000/lists").then((data) => {
           setList(data.data);
-          setDone(data.data)
+          setDone(data.data);
         });
       })
       .catch((err) => {
@@ -68,33 +63,9 @@ export const Home = () => {
 
   const toggleDone = (_id) => {
     axios.patch("http://localhost:5000/checked/" + _id).then((res) => {
-      console.log(res.data);
-      axios.get("http://localhost:5000/lists").then((data) =>{
-        setList(data.data)
-      })
-      .catch((err) =>{
-        console.log(err)
-      })
+      console.log("change",res.data.isDone);
       axios.get("http://localhost:5000/done").then((data) => {
         setDone(data.data);
-        console.log(done);
-      });
-    });
-  };
-
-  const unDone = (_id) => {
-    axios.patch("http://localhost:5000/checked/" + _id).then((res) => {
-      console.log(res.data);
-      axios.get("http://localhost:5000/lists").then((data) =>{
-        console.log(data.data)
-        setList(data.data)
-      })
-      .catch((err) =>{
-        console.log(err)
-      })
-      axios.get("http://localhost:5000/undone").then((data) => {
-        setUndone(data.data);
-        console.log(undone);
       });
     });
   };
@@ -103,12 +74,6 @@ export const Home = () => {
     setIsUpdating(true);
     setValue(value);
     setId(_id);
-  };
-
-  const handleCheck = (index) => {
-    const tasksClone = [...list];
-    tasksClone[index].isCompleted = !tasksClone[index].isCompleted;
-    setList(tasksClone);
   };
 
   const Task = () => {
@@ -122,15 +87,11 @@ export const Home = () => {
       setShow(false);
     }
   };
-  
+
   useEffect(() => {
     axios.get("http://localhost:5000/lists").then((data) => {
-      console.log(data);
       setList(data.data);
-      setDone(data.data)
-      setUndone(data.data)
-      console.log(done)
-      console.log(undone)
+      setDone(data.data);
     });
   }, []);
 
@@ -181,15 +142,13 @@ export const Home = () => {
                         <div className={styles.task_block}>
                           <div
                             className={styles.done_section}
-                            onClick={() => handleCheck(index)}
                           >
                             <input
-                            type='checkbox'
-                            className={styles.wait}
-                            defaultChecked={text.isDone}
-                            onClick={() => handleCheck(index)}
-                            onChange={() => toggleDone(text._id, text.isDone)}
-                          />
+                              type="checkbox"
+                              className={styles.wait}
+                              defaultChecked={text.isDone}
+                              onChange={() => toggleDone(text._id, text.isDone)}
+                            />
                             <div className={styles.ner1}>
                               <div className={styles.text_npt}>
                                 <input
@@ -200,10 +159,8 @@ export const Home = () => {
                                       ? "line-through"
                                       : undefined,
                                   }}
-                                  onClick={() => handleCheck(index)}
-                                >
-                                  
-                                </input>
+                                ></input>
+                                {text.isDone}
                               </div>
                             </div>
                           </div>
@@ -237,7 +194,6 @@ export const Home = () => {
                     </div>
                   )}
                 </>
-                
               )}
               {!show && (
                 <>
@@ -245,8 +201,19 @@ export const Home = () => {
                     done.map((text, index) => {
                       return (
                         <div className={styles.task_block}>
-                          <div className={styles.done_section}>
-                            <RiCheckboxCircleFill className={styles.done} />
+                          <div
+                            className={styles.done_section}
+                          >
+                            <input
+                              type="checkbox"
+                              className={styles.wait}
+                              defaultChecked={text.isDone}
+
+                              onChange={() => toggleDone(text._id, text.isDone)}
+                              style={{
+                                backgroundColor: "white",
+                              }}
+                            />
                             <div className={styles.ner1}>
                               <div className={styles.text_npt}>
                                 <input
@@ -260,14 +227,6 @@ export const Home = () => {
                             </div>
                           </div>
                           <div className={styles.btns}>
-                            <button
-                              className={styles.edit}
-                              onClick={() => {
-                                UpdateMood(text._id, text.todo);
-                              }}
-                            >
-                              edit
-                            </button>
                             <button
                               className={styles.delete}
                               onClick={() => {
@@ -289,46 +248,6 @@ export const Home = () => {
                     </div>
                   )}
                 </>
-                // <>
-                // {undone && undone.map((text, index) =>{
-                //   return(
-                //     <div className={styles.task_block}>
-                //     <div className={styles.done_section}>
-                //       <RiCheckboxCircleFill className={styles.done} />
-                //       <div className={styles.ner1}>
-                //         <div className={styles.text_npt}>
-                //           <input
-                //             className={styles.input_value}
-                //             value={text.todo}
-                //             style={{
-                //               textDecorationLine: "line-through",
-                //             }}
-                //           ></input>
-                //         </div>
-                //       </div>
-                //     </div>
-                //     <div className={styles.btns}>
-                //       <button
-                //         className={styles.edit}
-                //         onClick={() => {
-                //           UpdateMood(text._id, text.todo);
-                //         }}
-                //       >
-                //         edit
-                //       </button>
-                //       <button
-                //         className={styles.delete}
-                //         onClick={() => {
-                //           Delete(text._id);
-                //         }}
-                //       >
-                //         delete
-                //       </button>
-                //     </div>
-                //   </div>
-                //   )
-                // })}
-                // </>
               )}
             </div>
           </main>
