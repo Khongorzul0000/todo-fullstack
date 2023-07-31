@@ -64,7 +64,6 @@ input, button{
     font-size: 1.5rem;
     color: #6B7280;
     font-weight: 300;
-    margin-top: 2rem;
     cursor: pointer;
 }
 .task_block{
@@ -86,6 +85,7 @@ input, button{
     font-weight: bold;
     padding-left: 17px;
     width: 350%;
+    cursor: pointer;
 }
 .btns button{
     cursor: pointer;
@@ -110,6 +110,7 @@ input, button{
 .done_section{
     display: flex;
     padding-left: 1.5rem;
+    align-items: center;
 }
 .done{
     width: 20px;
@@ -150,6 +151,8 @@ input, button{
 .title{
     display: flex;
     justify-content: space-between;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
 }
 .cross:hover{
     opacity: 0.9;
@@ -169,13 +172,189 @@ input, button{
 .mid_title:hover{
     font-weight: bold;
 }
-
-
-
-
-
 .wait{
     border: 2px solid white;
     width: 20px;
-    border-radius: 10px;
+    height: 20px;
+    border-radius: 100%;
+
+}
+.date{
+    font-size: 13px;
+    color: white;
+    padding-left: 1rem;
+}
+.icons{
+    display: none;
+}
+@media only screen and (max-width: 1200px) {
+    .container{
+        width: 800px;
+    }
+    .btns{
+        width: 20%;
+    }
+    .npt_cross{
+        width: 88%;
+    }
+    .flex_crs{
+        display: flex;
+        justify-content: space-between;
+    }
+}
+@media only screen and (max-width: 1000px) {
+    .container{
+        width: 700px;
+    }
+    .btns{
+        width: 20%;
+    }
+    .btns button{
+        font-size: 1rem;
+    }
+    .input_value{
+        font-size: 1rem;
+    }
+    .date{
+        font-size: 12px;
+    }
+    .wait{
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+    }
+}
+@media only screen and (max-width: 745px) {
+    .container{
+        width: 600px;
+    }
+    .btns{
+        width: 23%;
+    }
+    .btns button{
+        font-size: 0.95rem;
+    }
+    .input_value{
+        font-size: 0.95rem;
+        width: 100%;
+    }
+    .date{
+        font-size: 12px;
+    }
+    .add_npt{
+        font-size: 0.95rem;
+        padding: 0.7rem;
+    }
+    .add_btn{
+        font-size: 0.95rem;
+    }
+    .task_block{
+        height: 50px;
+    }
+    .wait{
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+    }
+}
+@media only screen and (max-width: 620px) {
+    .container{
+        width: 100%;
+    }
+    .block{
+        padding: 15px;
+    }
+    .add_btn{
+        font-size: 0.9rem;
+    }
+    .npt_cross{
+        height: 45px;
+    }
+    .mid_title{
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+    .btns{
+        width: 25%;
+    }
+    .big_title{
+        font-weight: bold;
+    }
+    .wait{
+        width: 15px;
+        height: 15px;
+        border-radius: 100%;
+    }
+}
+@media only screen and (max-width: 525px) {
+    .btns button{
+        font-size: 80%;
+    }
+    .btns{
+        display: none;
+    }
+    .task_block{
+        height: 45px;
+    }
+    .title{
+        padding: 0 15px 0 15px ;
+        flex-wrap: wrap;
+        padding-top: 1rem;
+        border: 1rem;
+    }
+    .title :nth-child(2){
+        display: none;
+    }
+    .big_title{
+        font-size: 30px;
+    }
+    .icons{
+        display: flex;
+        font-size: 1.2rem;
+        margin-right: 1rem;
+    }
+    .same{
+        margin: 5px;
+    }
+    .add_npt::placeholder{
+        color: #e1ebff;
+        font-size: 11px;
+    }
+    .cross{
+        padding: 0.5rem 0.5rem 0.5rem 0;
+        display: flex;
+        align-items: center;
+    }
+    .done_section{
+        padding-left: 1rem;
+    }
+    .add_npt{
+        padding: 0.7rem 0 0.7rem 0.7rem;
+    }
+    .none_card{
+        padding: 0.5rem;
+        font-size: 15px;
+        border-radius: 0.5rem;
+        font-weight: 550;
+    }
+}
+@media only screen and (max-width: 330px) {
+    .mid_title{
+        width: 100%;
+    }
+    .date{
+        font-size: 10px;
+    }
+    .input_value{
+        font-size: 14px;
+    }
+    .icons{
+        font-size: 16px;
+    }
+    .none_card{
+        padding: 0.7rem;
+        font-size: 13px;
+        border-radius: 0.5rem;
+        font-weight: 550;
+    }
 }

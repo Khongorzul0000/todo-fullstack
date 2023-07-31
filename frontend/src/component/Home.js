@@ -3,11 +3,13 @@ import { useState, useEffect } from "react";
 import styles from "../styles/Home.module.css";
 import { FaSmileWink, FaSmileBeam } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
 export const Home = () => {
   const [value, setValue] = useState("");
   const [list, setList] = useState([]);
   const [done, setDone] = useState([]);
+  const [undone, setUndone] = useState([]);
   const [id, setId] = useState([]);
   const [show, setShow] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -20,9 +22,12 @@ export const Home = () => {
       })
       .then((res) => {
         console.log("created", res.data);
-        axios.get("http://localhost:5000/undone").then((data) => {
+        axios.get("http://localhost:5000/lists").then((data) => {
           setList(data.data);
           console.log(res.data._id);
+        });
+        axios.get("http://localhost:5000/undone").then((data) => {
+          setUndone(data.data);
         });
       });
   };
@@ -35,7 +40,12 @@ export const Home = () => {
         console.log("deleted", res.data);
         axios.get("http://localhost:5000/lists").then((data) => {
           setList(data.data);
+        });
+        axios.get("http://localhost:5000/done").then((data) => {
           setDone(data.data);
+        });
+        axios.get("http://localhost:5000/undone").then((data) => {
+          setUndone(data.data);
         });
       })
       .catch((err) => {
@@ -55,6 +65,9 @@ export const Home = () => {
         axios.get("http://localhost:5000/lists").then((data) => {
           setList(data.data);
         });
+        axios.get("http://localhost:5000/undone").then((data) => {
+          setUndone(data.data);
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -63,9 +76,12 @@ export const Home = () => {
 
   const toggleDone = (_id) => {
     axios.patch("http://localhost:5000/checked/" + _id).then((res) => {
-      console.log("change",res.data.isDone);
+      console.log("change", res.data.isDone);
       axios.get("http://localhost:5000/done").then((data) => {
         setDone(data.data);
+      });
+      axios.get("http://localhost:5000/undone").then((data) => {
+        setUndone(data.data);
       });
     });
   };
@@ -91,12 +107,18 @@ export const Home = () => {
   useEffect(() => {
     axios.get("http://localhost:5000/lists").then((data) => {
       setList(data.data);
+    });
+    axios.get("http://localhost:5000/done").then((data) => {
       setDone(data.data);
+    });
+    axios.get("http://localhost:5000/undone").then((data) => {
+      setUndone(data.data);
     });
   }, []);
 
-  const count = list.length;
+  const count = undone.length;
   const count1 = done.length;
+  const all = count + count1;
 
   return (
     <div className={styles.flex}>
@@ -127,8 +149,9 @@ export const Home = () => {
           <main>
             <div className={styles.title}>
               <u className={styles.mid_title} onClick={Task}>
-                Tasks / {count}
+                To Do / {count}
               </u>
+              <p className={styles.mid_title}>All / {all}</p>
               <u className={styles.mid_title} onClick={Completed}>
                 Completed / {count1}
               </u>
@@ -136,13 +159,11 @@ export const Home = () => {
             <div>
               {show && (
                 <>
-                  {list &&
-                    list.map((text, index) => {
+                  {undone &&
+                    undone.map((text, index) => {
                       return (
                         <div className={styles.task_block}>
-                          <div
-                            className={styles.done_section}
-                          >
+                          <div className={styles.done_section}>
                             <input
                               type="checkbox"
                               className={styles.wait}
@@ -160,7 +181,9 @@ export const Home = () => {
                                       : undefined,
                                   }}
                                 ></input>
-                                {text.isDone}
+                                <div className={styles.date}>
+                                  {text.createdDate.slice(0, 10)}
+                                </div>
                               </div>
                             </div>
                           </div>
@@ -182,10 +205,24 @@ export const Home = () => {
                               delete
                             </button>
                           </div>
+                          <div className={styles.icons}>
+                            <AiOutlineEdit
+                              className={styles.same}
+                              onClick={() => {
+                                UpdateMood(text._id, text.todo);
+                              }}
+                            />
+                            <AiOutlineDelete
+                              className={styles.same}
+                              onClick={() => {
+                                Delete(text._id);
+                              }}
+                            />
+                          </div>
                         </div>
                       );
                     })}
-                  {list && list.length === 0 && (
+                  {undone && undone.length === 0 && (
                     <div className={styles.none_flex}>
                       <div className={styles.none_card}>
                         Have no task to do{" "}
@@ -201,14 +238,11 @@ export const Home = () => {
                     done.map((text, index) => {
                       return (
                         <div className={styles.task_block}>
-                          <div
-                            className={styles.done_section}
-                          >
+                          <div className={styles.done_section}>
                             <input
                               type="checkbox"
                               className={styles.wait}
                               defaultChecked={text.isDone}
-
                               onChange={() => toggleDone(text._id, text.isDone)}
                               style={{
                                 backgroundColor: "white",
@@ -235,6 +269,14 @@ export const Home = () => {
                             >
                               delete
                             </button>
+                          </div>
+                          <div className={styles.icons}>
+                            <AiOutlineDelete
+                              className={styles.same}
+                              onClick={() => {
+                                Delete(text._id);
+                              }}
+                            />
                           </div>
                         </div>
                       );
