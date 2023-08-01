@@ -1,11 +1,9 @@
-import "./App.css";
-import {Home} from "./component"
-
+import {Home, Signup} from "./component"
 
 function App() {
   return (
     <>
-        <Home/>
+        <Signup/>
     </>
   );
 }

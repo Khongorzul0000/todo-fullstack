@@ -1,16 +1,15 @@
 const express = require("express");
-const { createTodo, getTodo, getTodos, deleteTodo, updateTodo, completedTodo, getUnDone, getIsDone} = require("../controller/todoController")
+const { createTodo, getTodo, deleteTodo, updateTodo, changeTodo, getUnDone, getIsDone} = require("../controller/todoController")
 
-const router    = express.Router()
+const todorouter    = express.Router()
 
-router
+todorouter
 .get("/get/:id", getTodo)
-.get("/lists", getTodos)
 .get("/done", getIsDone)
 .get("/undone", getUnDone)
 .post("/add", createTodo)
 .delete("/delete/:id", deleteTodo)
 .patch("/update/:id", updateTodo)
-.patch("/checked/:id", completedTodo)
+.patch("/checked/:id", changeTodo)
 
-module.exports = router
+module.exports = todorouter

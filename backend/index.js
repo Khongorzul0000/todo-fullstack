@@ -2,7 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const connectDB = require("./config/db")
 const cors = require("cors");
-const router = require("./route/todoRoute")
+const todorouter = require("./route/todoRoute")
+const userrouter = require("./route/userRoute")
 
 const app = express()
 
@@ -13,7 +14,7 @@ app.use(cors());
 app.use(cors());
 app.use(express.json());
 
-app.use(router)
+app.use(todorouter, userrouter)
 
 app.get("/", (req, res) =>{
     res.send("todo list backend")

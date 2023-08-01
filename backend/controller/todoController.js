@@ -6,11 +6,6 @@ const createTodo = async (req, res) =>{
     res.send(result);
 }
 
-const getTodos = async (req, res) =>{
-    const result = await Todo.find({})
-    res.send(result)
-}
-
 const getTodo = async (req, res) =>{
     const id = req.params.id
     const result = await Todo.findById({_id:id})
@@ -56,7 +51,7 @@ const updateTodo = async (req, res) =>{
     res.send(result)
 }
 
-const completedTodo = async (req, res) =>{
+const changeTodo = async (req, res) =>{
     const id = req.params.id
     const result = await Todo.findById({_id:id})
     result.isDone = !result.isDone
@@ -64,4 +59,4 @@ const completedTodo = async (req, res) =>{
     res.send(result)
 }
 
-module.exports = {createTodo, getTodo, getTodos, deleteTodo, updateTodo, completedTodo, getIsDone, getUnDone}
+module.exports = {createTodo, getTodo, deleteTodo, updateTodo, changeTodo, getIsDone, getUnDone}
