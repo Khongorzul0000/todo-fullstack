@@ -7,7 +7,6 @@ import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
 export const Home = () => {
   const [value, setValue] = useState("");
-  const [list, setList] = useState([]);
   const [done, setDone] = useState([]);
   const [undone, setUndone] = useState([]);
   const [id, setId] = useState([]);
@@ -22,10 +21,6 @@ export const Home = () => {
       })
       .then((res) => {
         console.log("created", res.data);
-        axios.get("http://localhost:5000/lists").then((data) => {
-          setList(data.data);
-          console.log(res.data._id);
-        });
         axios.get("http://localhost:5000/undone").then((data) => {
           setUndone(data.data);
         });
@@ -38,9 +33,6 @@ export const Home = () => {
       .delete("http://localhost:5000/delete/" + _id)
       .then((res) => {
         console.log("deleted", res.data);
-        axios.get("http://localhost:5000/lists").then((data) => {
-          setList(data.data);
-        });
         axios.get("http://localhost:5000/done").then((data) => {
           setDone(data.data);
         });
@@ -62,9 +54,6 @@ export const Home = () => {
       .then((res) => {
         console.log("updated", res.data);
         setIsUpdating(false);
-        axios.get("http://localhost:5000/lists").then((data) => {
-          setList(data.data);
-        });
         axios.get("http://localhost:5000/undone").then((data) => {
           setUndone(data.data);
         });
@@ -105,9 +94,6 @@ export const Home = () => {
   };
 
   useEffect(() => {
-    axios.get("http://localhost:5000/lists").then((data) => {
-      setList(data.data);
-    });
     axios.get("http://localhost:5000/done").then((data) => {
       setDone(data.data);
     });

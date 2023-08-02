@@ -5,6 +5,9 @@ const userSchema = new Schema({
         type:String,
         require:true,
     },
+    username:{
+        type:String,
+    },
     password:{
         type:String,
         require:true,

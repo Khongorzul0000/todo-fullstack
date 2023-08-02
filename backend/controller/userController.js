@@ -7,13 +7,13 @@ const createUser = async (req, res) =>{
 }
 
 const getUsers = async (req, res) =>{
-    const users = await User.find({}).populate({path:"todos"})
+    const users = await User.find({})
     res.send(users)
 }
 
 const getUser = async (req, res) =>{
     const id = req.params.id
-    const result = await User.findById({_id:id})
+    const result = await User.findById({_id:id}).populate({path:"todos"})
     res.send(result)
 }
 

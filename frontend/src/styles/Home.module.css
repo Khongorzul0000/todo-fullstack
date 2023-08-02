@@ -169,9 +169,6 @@ input, button{
 .ner1{
     color: red;
 }
-.mid_title:hover{
-    font-weight: bold;
-}
 .wait{
     border: 2px solid white;
     width: 20px;
