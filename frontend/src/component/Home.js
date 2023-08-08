@@ -4,6 +4,7 @@ import styles from "../styles/Home.module.css";
 import { FaSmileWink, FaSmileBeam } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import {Navbar} from "../component/Navbar"
 
 export const Home = () => {
   const [value, setValue] = useState("");
@@ -108,6 +109,7 @@ export const Home = () => {
 
   return (
     <div className={styles.flex}>
+      <Navbar/>
       <div className={styles.container}>
         <div className={styles.block}>
           <div className={styles.add_section}>

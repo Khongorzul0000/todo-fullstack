@@ -1,17 +1,16 @@
 const {Schema, model} = require("mongoose")
 
 const userSchema = new Schema({
+    username:{
+        type:String,
+    },
     email:{
         type:String,
         require:true,
     },
-    username:{
-        type:String,
-    },
     password:{
         type:String,
         require:true,
-        minlength:[8, 'Minimum password length is 8 character']
     },
     createdAt:{
         type:Date,

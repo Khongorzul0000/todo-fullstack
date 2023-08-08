@@ -1,5 +1,6 @@
-import {Home, Signup, Login} from "./component"
+import {Home, Signup, Login, Navbar} from "./component"
 import { Routes, BrowserRouter, Route } from "react-router-dom";
+import {Toaster} from "react-hot-toast"
 
 function App() {
   return (
@@ -7,10 +8,12 @@ function App() {
        <BrowserRouter>
         <div>
           <section>
+            <Toaster position="top-right" toastOptions={{duration:3000}} />
             <Routes>
               <Route path="/" element={<Home/>}/>
-              <Route path="/login" element={<Signup/>}/>
-              <Route path="/signup" element={<Login/>}/>
+              <Route path="/login" element={<Login/>}/>
+              <Route path="/signup" element={<Signup/>}/>
+              <Route path="/nav" element={<Navbar/>}/>
             </Routes>
           </section>
         </div>

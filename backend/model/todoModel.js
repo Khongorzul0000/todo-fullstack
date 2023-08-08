@@ -14,10 +14,13 @@ const todoSchema = new Schema ({
     },
     user:{
         type:Schema.Types.ObjectId,
-        ref:"User", 
+        ref:"Üser", 
         required:true
     }
+},{
+    toJSON:{virtuals:true}
 });
+
 
 const Todo = model("Todo", todoSchema)
 module.exports = Todo

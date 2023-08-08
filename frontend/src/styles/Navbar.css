@@ -1,0 +1,164 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+	font-family: "Titillium Web", sans-serif;
+}
+.wrapper{
+	width: 100%;
+	background-image: linear-gradient(36deg, rgb(199, 101, 255), rgb(59, 159, 230));
+}
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 90px;
+	width: 100%;
+	color: var(--textColor);
+	background: rgba(39, 39, 39, 0.4);
+}
+.wait{
+	width: 90%;
+	display: flex;
+	justify-content: space-between;
+}
+nav{
+	display: flex;
+	justify-content: space-between;
+}
+.nav-logo{
+	color: white;
+    font-weight: 600;
+    font-size: 25px;
+}
+.nav-menu ul li{
+	list-style-type: none;
+	margin: 0 25px;
+}
+.nav-menu ul{
+	display: flex;
+}
+.link{
+    text-decoration: none;
+    font-weight: 500;
+    color: white;
+    padding-bottom: 0;
+	font-weight: bold;
+	font-size: 20px;
+}
+.link:hover, .active {
+	border-bottom: 2px solid white;
+}
+.btn{
+	width: 130px;
+    height: 40px;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.4);
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s ease;
+    margin-right: 20px;
+}
+.btn:hover{
+    background: rgba(255, 255, 255, 0.3);
+}
+.nav-btn-drop{
+	display: none;
+}
+.lines{
+	color: white;
+	font-size: 23px;
+	display: none;
+}
+.lines:hover{
+	opacity: 0.8;
+}
+.lines:active{
+	opacity: 0.6;
+}
+
+.close{
+	display: none;
+	color: white;
+	font-size: 23px;
+}
+.close:hover{
+	opacity: 0.8;
+}
+.close:active{
+	opacity: 0.6;
+}
+.btn:active{
+	opacity: 0.6;
+}
+.icon{
+	font-size: 25px;
+	color: white;
+}
+.btn a{
+	color: white;
+	font-weight: 500;
+	font-size: 16px;
+}
+
+@media only screen and (max-width: 1024px) {
+	.lines {
+		display: flex;
+	}
+	.close{
+		display: flex;
+	}
+	.nav-btn{
+		display: none;
+	}
+
+	.header nav {
+		position: fixed;
+		top: -100vh;
+		left: 0;
+		height: 100%;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.5rem;
+		transition: 1s;
+        /* background: #5b5d88; */
+		background-image: linear-gradient(36deg, rgb(199, 101, 255), rgb(59, 159, 230));
+        backdrop-filter: blur(20px);
+	}
+
+	.header .responsive_nav {
+		transform: translateY(100vh);
+	}
+	.nav-menu ul{
+		flex-direction: column;
+        text-align: center;
+		position: relative;
+		top: 150px;
+	}
+	.nav-btn-drop{
+		display: block;
+		position: relative;
+		top: 150px;
+		text-align: center;
+		left: 10px;
+	}
+	.btn{
+		margin-top: 20px;
+	}
+	.link{
+		font-weight: 500;
+		color: #ffffff;
+		font-size: 30px;
+	}
+	.icon{
+		color: #ffffff;
+	}
+	.close {
+		position: absolute;
+		top: 2.8rem;
+		right: 3rem;
+	}
+}

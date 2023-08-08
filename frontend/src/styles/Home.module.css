@@ -11,7 +11,7 @@ input, button{
 .flex{
     display: flex;
     flex-direction: column;
-    background-color: #374151;
+    background-image: linear-gradient(36deg, rgb(199, 101, 255), rgb(59, 159, 230));
     min-height: 100vh;
     color: white;
     align-items: center;
@@ -28,7 +28,7 @@ input, button{
     flex-direction: column;
 }
 .big_title{
-    color: #6B7280;
+    color: #c0cce5;
     font-weight: 300;
     font-size: 2.5rem;
     margin-bottom: 1rem;
@@ -38,7 +38,8 @@ input, button{
     width: 100%;
 }
 .add_npt{
-    background-color: #1f2937;
+    /* background-color: #1f2937; */
+    background: rgba(39, 39, 39, 0.4);
     color: #EEE;
     padding: 1rem;
     border-radius: 1rem 0 0 1rem ;
@@ -46,7 +47,7 @@ input, button{
     font-size: 1rem;
 }
 .add_npt::placeholder{
-    color: #6B7280;
+    color: #c0cce5;
 }
 .add_btn{
     color: #ec4899;
@@ -62,14 +63,15 @@ input, button{
 }
 .mid_title{
     font-size: 1.5rem;
-    color: #6B7280;
+    color: #c0cce5;
     font-weight: 300;
     cursor: pointer;
 }
 .task_block{
     display: flex;
     justify-content: space-between;
-    background-color: #111827;
+    /* background-color: #111827; */
+    background: rgba(39, 39, 39, 0.4);
     max-width: 100%;
     min-width: 100%;
     height: 56px;
@@ -125,8 +127,8 @@ input, button{
 }
 .none_card{
     padding: 1rem ;
-    background-color: #111827;
     padding: 1rem;
+    background: rgba(39, 39, 39, 0.4);
     border-radius: 1rem;
     margin-top: 1rem;
     cursor: pointer;
@@ -137,7 +139,8 @@ input, button{
 }
 .cross{
     padding: 1rem;
-    background-color: #1f2937;
+    /* background-color: #1f2937; */
+    background: rgba(39, 39, 39, 0.4);
     width: max-content;
     border-radius: 0 1rem 1rem 0;
 }
