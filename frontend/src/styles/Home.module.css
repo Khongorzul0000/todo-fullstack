@@ -50,7 +50,8 @@ input, button{
     color: #c0cce5;
 }
 .add_btn{
-    color: #ec4899;
+    /* color: #ec4899; */
+    color: rgb(164, 47, 231);
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
@@ -187,6 +188,9 @@ input, button{
 .icons{
     display: none;
 }
+.same{
+    font-size: 20px;
+}
 @media only screen and (max-width: 1200px) {
     .container{
         width: 800px;
@@ -312,9 +316,14 @@ input, button{
         display: flex;
         font-size: 1.2rem;
         margin-right: 1rem;
+        gap: 20px;
     }
     .same{
         margin: 5px;
+        transition: .3s;
+    }
+    .same:hover{
+        color: rgb(199, 101, 255);
     }
     .add_npt::placeholder{
         color: #e1ebff;
@@ -340,7 +349,7 @@ input, button{
 }
 @media only screen and (max-width: 330px) {
     .mid_title{
-        width: 100%;
+        font-size: 16px;
     }
     .date{
         font-size: 10px;

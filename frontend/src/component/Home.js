@@ -13,6 +13,7 @@ export const Home = () => {
   const [id, setId] = useState([]);
   const [show, setShow] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [user, setUser] = useState()
 
   const addTodo = () => {
     if (!value) return;
