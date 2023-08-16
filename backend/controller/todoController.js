@@ -16,8 +16,6 @@ const getIsDone = async (req, res) =>{
    try{
     const result = await Todo.find({})
     const done = result.filter((word) => word.isDone == true)
-    console.log(done.length)
-    console.log(done)
     // res.json({count:done.length})
     res.send(done)
    }catch(err) {
@@ -29,8 +27,6 @@ const getUnDone = async (req, res) =>{
     try{
         const result = await Todo.find({})
         const done = result.filter((word) => word.isDone == false)
-        console.log(done.length)
-        console.log(done)
         // res.json({count:done.length})
         res.send(done)
        }catch(err) {

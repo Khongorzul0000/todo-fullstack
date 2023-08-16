@@ -19,10 +19,10 @@ app.use(cookieParser())
 
 app.use(todorouter, userrouter)
 
-app.get("/", (req, res) =>{
+app.get("/", (_req, res) =>{
     res.send("todo list backend")
 })
-app.get("/test", (req, res) =>{
+app.get("/test", (_req, res) =>{
     res.send("this is endpoint")
 })
 
