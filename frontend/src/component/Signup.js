@@ -4,8 +4,6 @@ import { AiOutlineUser } from "react-icons/ai";
 import { BiLockAlt } from "react-icons/bi";
 import { useState } from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom"
-import {toast} from "react-hot-toast"
 
 export const Signup = () => {
   const [data, setData] = useState({
